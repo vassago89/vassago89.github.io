@@ -1,17 +1,130 @@
 ﻿@page "/"
-@using AntDesign
+@using AntDesign;
 
-<div>
-    <image src=1.PNG id=1></image>
-    </div>
-<div>
-    <image src=2.PNG id=1></image>
-</div>
-<div>
-    <image src=3.PNG id=1></image>
-</div>
-<div>
-    <image src=4.PNG id=1></image>
-</div>
-<h1 class="h6">안녕하세여 행님</h1>
-<Button Type="primary">Hello World!</Button>
+<Layout Style="background-color: transparent;">
+    <Sider Style="background-color: transparent; margin: 0.5em;">
+        <div style="margin: 0.5em">
+            <a href="https://github.com/vassago89/">
+                <Image Preview="false" src="https://avatars.githubusercontent.com/vassago89"></Image>
+            </a>
+            <Divider Orientation="left"><b>Infomation</b></Divider>
+            <Descriptions Bordered>
+                <DescriptionsItem Title="Name" Span="3">정해민</DescriptionsItem>
+                <DescriptionsItem Title="Mail" Span="3">vassago89@gmail.com</DescriptionsItem>
+            </Descriptions>
+            <Divider Orientation="left"><b>Language</b></Divider>
+            <AntList Class="demo-loadmore-list" DataSource="@Language" ItemLayout="ListItemLayout.Horizontal">
+                <ChildContent Context="tuple">
+                    <ListItem>
+                        <ListItemMeta>
+                            <AvatarTemplate>
+                                <div style="height: 32px">
+                                    <Tooltip Placement="PlacementType.BottomCenter" Title="@tuple.Desc">
+                                        <Image Preview="false" Height="32px" Src="@tuple.Src"></Image>
+                                    </Tooltip>
+                                </div>
+                            </AvatarTemplate>
+                            <TitleTemplate>
+                                <Progress Percent=@tuple.Score />
+                            </TitleTemplate>
+                        </ListItemMeta>
+                    </ListItem>
+                </ChildContent>
+            </AntList>
+            <Divider Orientation="left"><b>UI</b></Divider>
+            <AntList Class="demo-loadmore-list" DataSource="@UI" ItemLayout="ListItemLayout.Horizontal">
+                <ChildContent Context="tuple">
+                    <ListItem>
+                        <ListItemMeta>
+                            <AvatarTemplate>
+                                <div style="height: 32px">
+                                    <Tooltip Placement="PlacementType.BottomCenter" Title="@tuple.Desc">
+                                        <Image Preview="false" Height="32px" Src="@tuple.Src"></Image>
+                                    </Tooltip>
+                                </div>
+                            </AvatarTemplate>
+                            <TitleTemplate>
+                                <Progress Percent=@tuple.Score />
+                            </TitleTemplate>
+                        </ListItemMeta>
+                    </ListItem>
+                </ChildContent>
+            </AntList>
+        </div>
+    </Sider>
+    <Content Style="margin: 0.5em;">
+        <Divider><b>Gallery</b></Divider>
+        <Carousel Style="background-color: aliceblue;">
+            <CarouselSlick>
+                <Image Preview="false" Height="320px" Src="static/1.PNG"></Image>
+            </CarouselSlick>
+            <CarouselSlick>
+                <Image Preview="false" Height="320px" Src="static/2.PNG"></Image>
+            </CarouselSlick>
+            <CarouselSlick>
+                <Image Preview="false" Height="320px" Src="static/3.PNG"></Image>
+            </CarouselSlick>
+            <CarouselSlick>
+                <Image Preview="false" Height="320px" Src="static/4.PNG"></Image>
+            </CarouselSlick>
+        </Carousel>
+    </Content>
+</Layout>
+
+
+<style>
+    .side_bar {
+        background-color: aliceblue;
+        left: 0;
+        right: 0;
+        height: 3.5rem;
+        opacity: 0.9;
+        position: fixed;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body {
+        display: flex;
+        left: 0;
+        right: 0;
+        margin-top: 3.5rem;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<style>
+            .ant-carousel {
+            }
+
+                .ant-carousel .slick-slide {
+                    text-align:center;
+                    background-color: aliceblue;
+                }
+</style>
+
+@code 
+{
+    public IEnumerable<(string Src, string Desc, double Score)> Language;
+    public IEnumerable<(string Src, string Desc, double Score)> UI;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var language = new List<(string, string, double)>();
+        language.Add(("https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/csharp/csharp.png", "c#", 70));
+        language.Add(("https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/cpp/cpp.png", "c++", 40));
+        language.Add(("https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png", "python", 25));
+
+
+        var ui = new List<(string, string, double)>();
+        ui.Add(("static/xaml.png", "xaml", 25));
+
+        Language = language;
+        UI = ui;
+
+        await base.OnInitializedAsync();
+    }
+}

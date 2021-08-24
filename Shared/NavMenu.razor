@@ -1,4 +1,17 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿<Menu Theme="MenuTheme.Dark" Mode="MenuMode.Horizontal" style="width: 100%">
+    <MenuItem>
+        <MenuLink Href="">
+            <span class="oi oi-home" aria-hidden="true"></span> Index
+        </MenuLink>
+    </MenuItem>
+    <MenuItem>
+        <NavLink href="counter">
+            <span class="oi oi-image" aria-hidden="true"></span> Image Edit
+        </NavLink>
+    </MenuItem>
+</Menu>
+
+@*<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">vassago89.github.io</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -22,8 +35,8 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </li>
-    </ul>
-</div>
+    </ul>  
+</div>*@
 
 @code {
     private bool collapseNavMenu = true;

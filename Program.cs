@@ -19,6 +19,7 @@ namespace vassago89.github.io
 
             builder.Services.AddAntDesign();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            //builder.Services.AddSingleton<>();
 
             await builder.Build().RunAsync();
         }

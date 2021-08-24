@@ -1,15 +1,53 @@
 ﻿@inherits LayoutComponentBase
 
-@*<div class="sidebar">
-    <NavMenu />
-</div>*@
+<div class="header">
+    <Menu Theme="MenuTheme.Light" Mode="MenuMode.Horizontal" style="background-color: transparent;">
+        <MenuItem>
+            <MenuLink Href="">
+                <span class="oi oi-home" aria-hidden="true"></span> Index
+            </MenuLink>
+        </MenuItem>
+        <MenuItem>
+            <NavLink href="counter">
+                <span class="oi oi-image" aria-hidden="true"></span> Image Edit
+            </NavLink>
+        </MenuItem>
+    </Menu>
+</div>
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="https://www.cisp.or.kr/archives/3814" target="_blank" class="ml-md-auto">c# 망해라</a>
-    </div>
-
-    <div class="content px-4">
-        @Body   
+<div class="container">
+    <div class="body">
+        @Body
     </div>
 </div>
+
+<style>
+    .container {
+        height: 100%;
+        width: 100%;
+    }
+
+    .header {
+        background-color: aliceblue;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3.5rem;
+        /*opacity: 0.9;*/
+        position: fixed;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body {
+        display: flex;
+        left: 0;
+        right: 0;
+        margin-top: 3.5rem;
+        height: 100%;
+        overflow: hidden;
+        /*justify-content: center;*/
+    }
+</style>
