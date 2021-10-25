@@ -2,13 +2,46 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
 }
 
-app {
+.dark {
     background-color: black;
-    width: 100%;
-    height: 100%;
+    height: 95vh;
+    color: white;
 }
 
+    .dark .fore {
+        color: white;
+    }
+
+.white {
+    background-color: white;
+    height: 95vh;
+    color: black;
+}
+
+    .white .fore {
+        color: black;
+    }
+
+.header {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5vh;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.body {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    width: 100%;
+}

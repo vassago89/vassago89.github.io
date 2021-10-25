@@ -1,7 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
+
 <div class="header">
-    <Menu Theme="MenuTheme.Light" Mode="MenuMode.Horizontal" style="background-color: transparent;">
+    <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Horizontal">
         <MenuItem>
             <MenuLink Href="">
                 <span class="oi oi-home" aria-hidden="true"></span> Index
@@ -14,39 +15,9 @@
         </MenuItem>
     </Menu>
 </div>
-
-<div class="container">
-    <div class="body">
-        @Body
-    </div>
+<div class="body">
+    @Body
 </div>
-
-<style>
-    .container {
-        width: 100%;
-    }
-
-    .header {
-        background-color: aliceblue;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3.5rem;
-        /*opacity: 0.9;*/
-        position: fixed;
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .body {
-        display: flex;
-        left: 0;
-        right: 0;
-        margin-top: 3.5rem;
-        /*height: 100%;*/
-        overflow-x: hidden;
-        /*justify-content: center;*/
-    }
-</style>
+@*<div class="container1">
+    
+</div>*@

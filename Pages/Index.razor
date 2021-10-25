@@ -1,10 +1,10 @@
 ﻿@page "/"
 @using AntDesign;
 
-<Layout Style="display:flex; background-color: transparent;">
-    <Sider Style="background-color: transparent; margin: 0.5em;">
+<!--<Layout Style="display:flex; background-color: transparent;">
+    <Sider Style="background-color: transparent; margin: 0.5em;">-->
         @*<div style="width:14.5em;">*@
-        <div>
+        <!--<div>
             <a href="https://github.com/vassago89/">
                 <Image Preview="false" src="https://avatars.githubusercontent.com/vassago89"></Image>
             </a>
@@ -66,7 +66,7 @@
                         <div style="width: 7.5em">2021 - 01</div>
                     </DescriptionsItem>
                     <DescriptionsItem Title="퇴사일">
-                        <div style="width: 7.5em">-</div>
+                        <div style="width: 7.5em">재직 중</div>
                     </DescriptionsItem>
                     <DescriptionsItem Title="직책">
                         선임 연구원
@@ -138,7 +138,7 @@
                 <h5>2008</h5>
                 <Descriptions Bordered>
                     <DescriptionsItem Title="소속">
-                        <div style="width: 7.5em">명지학교</div>
+                        <div style="width: 7.5em">명지대학교</div>
                     </DescriptionsItem>
                     <DescriptionsItem Title="입학일">
                         <div style="width: 7.5em">2008 - 03</div>
@@ -156,28 +156,85 @@
             </TimelineItem>
         </Timeline>
         <Divider><b>Projects</b></Divider>
-
-        <Divider><b>Gallery</b></Divider>
+        <Timeline Mode="left">
+            <TimelineItem Dot="DotTemplate">
+                <p><h5>2021</h5></p>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2020</h5></p>
+                <div style="margin: 1em">
+                    <Divider Orientation="left">Tray Inspector</Divider>
+                    <Card>
+                        <CardGrid Style="width:33%;" Hoverable="true">
+                            <Image Src="static/1.PNG" />
+                        </CardGrid>
+                        <body>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                삼성 디스플레이 Foldable Glass Tray의 이물 검출 및 배출
+                                Skills : C#, C++, WPF, Prism, 3D Visualization, MC Protocol
+                                Position : ALL
+                            </div>
+                        </body>
+                    </Card>
+                    <Divider Orientation="left">Tray Inspector</Divider>
+                    <Card>
+                        <CardGrid Style="width:67%; height: 100%;">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                삼성 디스플레이 Foldable Glass Tray의 이물 검출 및 배출
+                                Skills : C#, C++, WPF, Prism, 3D Visualization, MC Protocol
+                                Position : ALL
+                            </div>
+                        </CardGrid>
+                        <CardGrid Style="width:33%;" Hoverable="true">
+                            <Image Src="static/1.PNG" />
+                        </CardGrid>
+                    </Card>
+                </div>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2019</h5></p>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2018</h5></p>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2017</h5></p>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2016</h5></p>
+            </TimelineItem>
+            <TimelineItem>
+                <p><h5>2015</h5></p>
+            </TimelineItem>
+        </Timeline>
+        <Divider><b>UI Gallery</b></Divider>
         <Carousel Autoplay="TimeSpan.FromSeconds(2)" Style="background-color: aliceblue;">
             <CarouselSlick>
-                <Image Preview="false" Height="320px" Src="static/1.PNG"></Image>
+                <Image Preview="false" Height="32em" Src="static/1.PNG"></Image>
             </CarouselSlick>
             <CarouselSlick>
-                <Image Preview="false" Height="320px" Src="static/2.PNG"></Image>
+                <Image Preview="false" Height="32em" Src="static/2.PNG"></Image>
             </CarouselSlick>
             <CarouselSlick>
-                <Image Preview="false" Height="320px" Src="static/3.PNG"></Image>
+                <Image Preview="false" Height="32em" Src="static/3.PNG"></Image>
             </CarouselSlick>
             <CarouselSlick>
-                <Image Preview="false" Height="320px" Src="static/4.PNG"></Image>
+                <Image Preview="false" Height="32em" Src="static/4.PNG"></Image>
             </CarouselSlick>
         </Carousel>
     </Content>
-</Layout>
-
-
+</Layout>-->
+<div class="white">
+    <Divider><b>Profile</b></Divider>
+</div>
+<div class="dark">
+    <Divider Class="fore"><b>Profile</b></Divider>
+</div>
+<div class="white">
+    <Divider><b>Profile</b></Divider>
+</div>
 <style>
-    .side_bar {
+    /*.side_bar {
         background-color: aliceblue;
         left: 0;
         right: 0;
@@ -197,10 +254,8 @@
         margin-top: 3.5rem;
         height: 100%;
         overflow: hidden;
-    }
-</style>
+    }*/
 
-<style>
     .ant-carousel {
     }
 
@@ -219,14 +274,14 @@
 
     public ListGridType Gutter { get; } = new ListGridType
     {
-    Gutter = 16,
-    Xs = 1,
-    Sm = 2,
-    Md = 4,
-    Lg = 4,
-    Xl = 6,
-    Xxl = 3,
-    Column = 3
+     Gutter = 16,
+     Xs = 1,
+     Sm = 2,
+     Md = 4,
+     Lg = 4,
+     Xl = 6,
+     Xxl = 3,
+     Column = 3
     };
 
     public IEnumerable<(string Src, string Desc, double Score)> Language { get; private set; }
@@ -235,30 +290,30 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var language = new List<(string, string, double)>();
-        language.Add(("static/icons/csharp.png", "c#", 70));
-        language.Add(("static/icons/cplusplus.png", "c++", 40));
-        language.Add(("static/icons/python.png", "python", 25));
+     var language = new List<(string, string, double)>();
+     language.Add(("static/icons/csharp.png", "c#", 70));
+     language.Add(("static/icons/cplusplus.png", "c++", 40));
+     language.Add(("static/icons/python.png", "python", 25));
 
 
-        var ui = new List<(string, string, double)>();
-        ui.Add(("static/icons/xaml.png", "xaml", 50));
-        ui.Add(("static/icons/html5.png", "html", 10));
-        ui.Add(("static/icons/css3.png", "css", 10));
+     var ui = new List<(string, string, double)>();
+     ui.Add(("static/icons/xaml.png", "xaml", 50));
+     ui.Add(("static/icons/html5.png", "html", 10));
+     ui.Add(("static/icons/css3.png", "css", 10));
 
-        var tool = new List<(string, string)>();
-        tool.Add(("static/icons/vs.png", "visual studio"));
-        tool.Add(("static/icons/vs-code.png", "visual studio code"));
-        tool.Add(("static/icons/opencv.png", "opencv"));
-        tool.Add(("static/icons/cuda.png", "cuda"));
-        tool.Add(("static/icons/prism.png", "prism"));
-        tool.Add(("static/icons/entityframework6.png", "entity framework6"));
-        tool.Add(("static/icons/firebird.png", "fire bird db"));
+     var tool = new List<(string, string)>();
+     tool.Add(("static/icons/vs.png", "visual studio"));
+     tool.Add(("static/icons/vs-code.png", "visual studio code"));
+     tool.Add(("static/icons/opencv.png", "opencv"));
+     tool.Add(("static/icons/cuda.png", "cuda"));
+     tool.Add(("static/icons/prism.png", "prism"));
+     tool.Add(("static/icons/entityframework6.png", "entity framework6"));
+     tool.Add(("static/icons/firebird.png", "fire bird db"));
 
-        Language = language;
-        UI = ui;
-        Tool = tool;
+     Language = language;
+     UI = ui;
+     Tool = tool;
 
-        await base.OnInitializedAsync();
+     await base.OnInitializedAsync();
     }
 }
