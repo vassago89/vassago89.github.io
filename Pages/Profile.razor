@@ -1,0 +1,247 @@
+﻿@page "/"
+@using AntDesign;
+@using vassago89.github.io.Codes;
+ 
+<div style="display:block;">
+    <div id="intro" class="full">
+        @*<Title Level="1">안녕하세요. 제 이름은 정해민입니다.</Title>*@
+        <Title Level="2" Class="middle">
+            Intro
+        </Title>
+        <Divider></Divider>
+        <div style="margin: 0rem 1rem">
+            <Title Level="4"><b>Job</b></Title>
+            <Paragraph><b>Image Processing</b></Paragraph>
+            <Paragraph><b>Desktop Apllication Development</b></Paragraph>
+            @*<Title Level="3">Education</Title>
+        <Paragraph>명지대학교 전자공학과 학부 졸업</Paragraph>
+        <Paragraph>명지대학원 전자공학과 석사 수료</Paragraph>*@
+            <Title Level="4"><b>Skills</b></Title>
+            <Paragraph><b>Language</b></Paragraph>
+            <img title="C#" src="/static/icons/csharp.png" alt="C#" height="32" width="32">
+            <img title="C++" src="/static/icons/cplusplus.png" alt="C++" height="32" width="32">
+            <img title="Python" src="/static/icons/python.png" alt="Python" height="32" width="32">
+            <Paragraph><b>Library</b></Paragraph>
+            <img title="OpenCV" src="/static/icons/opencv.png" alt="OpenCV" height="32" width="32">
+            <img title="WPF" src="/static/icons/wpf.png" alt="WPF" height="32" width="32">
+            <img title="Entity Framework" src="/static/icons/entity.svg" alt="Entity Framework" height="32" width="32">
+            <img title="Cuda" src="/static/icons/cuda.png" alt="Cuda" height="32" width="32">
+            <img title="Prism" src="/static/icons/prism.png" alt="Prism" height="32" width="32">
+            <Paragraph><b>Tool</b></Paragraph>
+            <img title="Git" src="/static/icons/github.png" alt="Git" height="32" width="32">
+            <img title="Visual Studio" src="/static/icons/vs.png" alt="Visual Studio" height="32" width="32">
+            <img title="VS Code" src="/static/icons/vs-code.png" alt="VS Code" height="32" width="32">
+        </div>
+    </div>
+    <div id="experience" class="full invert">
+        @*<Title Level="2" Class="middle">
+            Experience
+        </Title>*@
+        <div class="row-flex">
+            <div style="display: flex; flex-direction: column; ">
+                <Title Level="4" Class="middle">
+                    Experience
+                </Title>
+                <Timeline>
+                    <TimelineItem>
+                        <Paragraph>다이트론 코리아(주)</Paragraph>
+                        <div style="display: flex">
+                            <div class="gray-text">
+                                <p>직급</p>
+                                <p>입사일</p>
+                                <p>퇴사일</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>선임 연구원</p>
+                                <p>2021-01</p>
+                                <p>2021-12</p>
+                            </div>
+                            <div style="margin: 0rem 2rem;"></div>
+                            <div class="gray-text row-middle">
+                                <p>직무</p>
+                            </div>
+                            <div class="border"></div>
+                            <div class="row-middle">
+                                <p>도로교통연구원 과제</p>
+                                <p>광학 검사 프로그램 개발</p>
+                            </div>
+                        </div>
+                    </TimelineItem>
+                    <TimelineItem>
+                        <Paragraph>(주)유니아이</Paragraph>
+                        <div style="display: flex">
+                            <div class="gray-text row-middle">
+                                <p>직급</p>
+                                <p>입사일</p>
+                                <p>퇴사일</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>주임 연구원</p>
+                                <p>2017-01</p>
+                                <p>2020-10</p>
+                            </div>
+                            <div style="margin: 0rem 2rem;"></div>
+                            <div class="gray-text row-middle">
+                                <p>직무</p>
+                            </div>
+                            <div class="border"></div>
+                            <div class="row-middle">
+                                <p>광학 검사 프로그램 개발</p>
+                                <p>광학계 검토</p>
+                            </div>
+                        </div>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <Title Level="4" Class="middle">
+                    Education
+                </Title>
+                <Timeline>
+                    <TimelineItem>
+                        <Paragraph>명지대학원</Paragraph>
+                        <div style="display: flex">
+                            <div class="gray-text row-middle">
+                                <p>입학일</p>
+                                <p>졸업일</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>2015-03</p>
+                                <p>2017-02</p>
+                            </div>
+                            <div style="margin: 0rem 2rem;"></div>
+                            <div class="gray-text">
+                                <p>전공</p>
+                                <p>학점</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>전자공학과 (영상처리 연구실)</p>
+                                <p>4.19 / 4.5</p>
+                            </div>
+                        </div>
+                        @*<Descriptions>
+                            <DescriptionsItem Title="전공">전자공학과</DescriptionsItem>
+                            <DescriptionsItem Title="입학일">2015-03</DescriptionsItem>
+                            <DescriptionsItem Title="졸업일">2017-02</DescriptionsItem>
+                        </Descriptions>*@
+                    </TimelineItem>
+                    <TimelineItem>
+                        <Paragraph>명지대학교</Paragraph>
+                        <div style="display: flex">
+                            <div class="gray-text row-middle">
+                                <p>입학일</p>
+                                <p>졸업일</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>2008-03</p>
+                                <p>2015-02</p>
+                            </div>
+                            <div style="margin: 0rem 2rem;"></div>
+                            <div class="gray-text">
+                                <p>전공</p>
+                                <p>학점</p>
+                            </div>
+                            <div class="border"></div>
+                            <div>
+                                <p>전자공학과</p>
+                                <p>3.21 / 4.5</p>
+                            </div>
+                        </div>
+                        @*<Descriptions>
+            <DescriptionsItem Title="전공">전자공학과</DescriptionsItem>
+            <DescriptionsItem Title="입학일">2008-03</DescriptionsItem>
+            <DescriptionsItem Title="졸업일">2015-02</DescriptionsItem>
+        </Descriptions>*@
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        </div>
+    </div>
+    <div id="project" class="full">
+        <Title Level="2" Class="middle">
+            Project
+        </Title>
+    </div>
+    <div id="code" class="full invert">
+            <Title Level="2" Class="middle">
+                Code Style
+            </Title>
+            @*<Paragraph Class="middle">재사용성을 높이고 실구현 시 코드량이 감소하는 구현을 선호합니다.</Paragraph>
+            <Divider></Divider>*@
+            <Menu Theme="MenuTheme.Light" Mode=MenuMode.Horizontal SelectedKeysChanged="CodeChanged" SelectedKeys="@Selected">
+                <MenuItem Key="Config">
+                    설정
+                </MenuItem>
+                <MenuItem Key="IoC">
+                    의존성 주입
+                </MenuItem>
+                <MenuItem Key="PipeLine">
+                    순차 &amp; 병렬 처리
+                </MenuItem>
+                <MenuItem Key="EventBus">
+                    프로세스간 통신
+                </MenuItem>
+            </Menu>
+            <div class="code-style @ConfigCollapse">
+                <IConfig></IConfig>
+            </div>
+            <div class="code-style @PipeLineCollapse">
+                <IPipeLine></IPipeLine>
+            </div>
+            <div class="code-style @EventBusCollapse">
+                <IEventBus></IEventBus>
+            </div>
+            <div class="code-style @IoCCollapse">
+                <IoC></IoC>
+            </div>
+        </div>
+    </div>
+    @code
+{
+        readonly string Collapse = "collapse";
+
+        string[] Selected = { "Config" };
+
+        string ConfigCollapse = "";
+        string EventBusCollapse = "collapse";
+        string PipeLineCollapse = "collapse";
+        string IoCCollapse = "collapse";
+
+        void CodeChanged(string[] keys)
+        {
+            switch (keys.First())
+            {
+                case "Config":
+                    ConfigCollapse = "";
+                    EventBusCollapse = Collapse;
+                    PipeLineCollapse = Collapse;
+                    IoCCollapse = Collapse;
+                    break;
+                case "EventBus":
+                    ConfigCollapse = Collapse;
+                    EventBusCollapse = "";
+                    PipeLineCollapse = Collapse;
+                    IoCCollapse = Collapse;
+                    break;
+                case "PipeLine":
+                    ConfigCollapse = Collapse;
+                    EventBusCollapse = Collapse;
+                    PipeLineCollapse = "";
+                    IoCCollapse = Collapse;
+                    break;
+                case "IoC":
+                    ConfigCollapse = Collapse;
+                    EventBusCollapse = Collapse;
+                    PipeLineCollapse = Collapse;
+                    IoCCollapse = "";
+                    break;
+            }
+
+            Selected = keys;
+        }
+    }

@@ -1,0 +1,60 @@
+﻿<Title Level="4">Wpf Prism Library를 이용한 의존성 주입</Title>
+<div style="margin: 0rem 1rem">
+<Paragraph>App</Paragraph>
+<pre><code style="background-color: transparent;">
+public partial class App : PrismApplication
+{
+    CancellationTokenSource _cts;
+
+    protected override Window CreateShell()
+    {
+        return new ShellView();
+    }
+
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        _cts = new CancellationTokenSource();
+
+        containerRegistry
+            .RegisterInstance(_cts.Token)
+            .RegisterSingleton(IService);
+    }
+}
+
+</code></pre>
+<Paragraph>View</Paragraph>
+<pre><code style="background-color: transparent;">
+&lt;Window
+    x:Class="Example.Views.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CopyCat.Wpf.Views"
+    xmlns:prism="http://prismlibrary.com/"
+    mc:Ignorable="d"
+    prism:ViewModelLocator.AutoWireViewModel="True"&gt;
+
+&lt;/Window&gt;
+</code></pre>
+<Paragraph>ViewModel</Paragraph>
+<pre><code style="background-color: transparent">
+namespace Example.ViewModels
+{
+    class ShellViewModel : BindableBase
+    {
+        IService _service;
+        CancellationToken _token;
+        
+        public VideoViewModel(IService service, CancellationToken token)
+        {
+            _service = service;
+            _token = token;
+        }
+    }
+}
+</code></pre>
+</div>
+@code {
+
+}

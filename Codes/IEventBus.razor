@@ -1,0 +1,164 @@
+﻿<Title Level="4">Local Process간 게시-구독 패턴</Title>
+<div style="margin: 0rem 1rem">
+    <Paragraph>인터페이스</Paragraph>
+<pre><code style="background-color: transparent;">
+interface IEvent { }
+
+interface IEventBus
+{
+    void Publish(IEvent @@event);
+    void Dispose();
+}
+
+</code></pre>
+<Paragraph>단일 프로세스 EventBus</Paragraph>
+<pre><code style="background-color: transparent;">
+class EventBus&lt;T&gt; : IEventBus where T : IEvent
+{
+    protected event Action&lt;T&gt; Actions;
+
+    public virtual void Publish(IEvent @@event)
+    {
+        Actions?.Invoke((T)@@event);
+    }
+
+    public virtual void Subscribe(Action&lt;T&gt; action)
+    {
+        Actions += action;
+    }
+
+    public virtual void Dispose() { }
+}
+
+</code></pre>
+
+<Paragraph>다중 프로세스 EventBus</Paragraph>
+<pre><code style="background-color: transparent;">
+class PipeEventBus&lt;T&gt; : EventBus&lt;T&gt; where T : IEvent
+{
+    private BinaryFormatter _formatter = new BinaryFormatter();
+    private Task _serverTask;
+
+    private NamedPipeClientStream _client;
+
+    private Dictionary&lt;string, NamedPipeServerStream&gt; _servers;
+
+    public PipeEventBus()
+    {
+        _servers = new Dictionary&lt;string, NamedPipeServerStream&gt;();
+    }
+
+    public override void Publish(IEvent @@event)
+    {
+        try
+        {
+            var _formatter = new BinaryFormatter();
+
+            if (_client == null || _client.IsConnected == false)
+            {
+                _client = new NamedPipeClientStream(".", typeof(T).Name, PipeDirection.InOut);
+                _client.Connect();
+            }
+
+            _formatter.Serialize(_client, @@event);
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    public override void Subscribe(Action&lt;T&gt; action)
+    {
+        base.Subscribe(action);
+
+        _serverTask = Task.Run(() =>
+        {
+            var server = new NamedPipeServerStream(
+            typeof(T).Name,
+            PipeDirection.InOut);
+
+            _servers[typeof(T).Name] = server;
+
+            server.BeginWaitForConnection(result =>
+            {
+                try
+                {
+                    server.EndWaitForConnection(result);
+
+                    while (true)
+                    {
+                        server.WaitForPipeDrain();
+                        var @@event = (T)_formatter.Deserialize(server);
+                        base.Publish(@@event);
+                        server.Flush();
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+            }, null);
+        });
+    }
+
+    public override void Dispose()
+    {
+        foreach (var pair in _servers)
+        {
+            var server = pair.Value;
+            if (server.IsConnected == false)
+            {
+                NamedPipeClientStream clt = new NamedPipeClientStream(".", pair.Key, PipeDirection.InOut);
+                clt.Connect();
+                clt.Close();
+            }
+
+            server.Close();
+            server.Dispose();
+        }
+    }
+}
+
+</code></pre>
+    <Paragraph>Usage (이벤트 정의)</Paragraph>
+<pre><code style="background-color: transparent;">
+[Serializable]
+public enum ECommand
+{
+    Start, Stop, Export
+}
+
+[Serializable]
+public class CommandEvent : IEvent
+{
+    public ECommand Command { get; }
+    public double Fps { get; }
+
+    public CommandEvent(ECommand command, double fps)
+    {
+        Command = command;
+        Fps = fps;
+    }
+}
+
+</code></pre>
+    <Paragraph>Usage (Program 1)</Paragraph>
+<pre><code style="background-color: transparent;">
+var eventBus = new PipeEventBus&lt;CommandEvent&gt;();
+eventBus.Publish(new CommandEvent(ECommand.Start, 60));
+
+</code></pre>
+    <Paragraph>Usage (Program 2)</Paragraph>
+<pre><code style="background-color: transparent;">
+var eventBus = new PipeEventBus&lt;CommandEvent&gt;();
+eventBus.Subscribe(@@event =>
+{
+    this.Command = @@event.Command;
+    this.Fps = @@event.Fps;
+});
+</code></pre>
+</div>
+@code {
+
+}

@@ -4,12 +4,14 @@
     <Found Context="routeData">
         <RouteView RouteData="routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
-
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
-            <Result Status="404" />
+            <div style="margin: auto;">
+                <Result Status="404"
+                        Title="404"
+                        SubTitle="Sorry, the page you visited does not exist." />
+            </div>
         </LayoutView>
     </NotFound>
 </Router>
-
 <AntContainer />

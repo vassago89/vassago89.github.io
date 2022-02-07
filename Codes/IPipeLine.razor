@@ -1,0 +1,110 @@
+﻿<Title Level="4">순차적인 병렬처리를 수행하는 파이프라인</Title>
+<div style="margin: 0rem 1rem">
+    <Paragraph>추상 클래스</Paragraph>
+<pre><code style="background-color: transparent;">
+abstract class PipeLine&lt;T&gt;
+{
+    protected CancellationToken _token { get; set; }
+    protected ManualResetEvent _resetEvent = new ManualResetEvent(false);
+
+    private ConcurrentQueue&lt;T&gt; _queue = new ConcurrentQueue&lt;T&gt;();
+    protected ConcurrentQueue&lt;T&gt; Queue => _queue;
+
+    public int Count { get; set; }
+    public bool IsRun => _token == null ? false : _token.IsCancellationRequested == false;
+    public EventHandler&lt;Exception&gt; ExceptionHanlder { get; set; }
+
+    public abstract void Run(CancellationToken token);
+    public abstract void Enqueue(T data);
+}
+
+</code></pre>
+<Paragraph>구현</Paragraph>
+<pre><code style="background-color: transparent;">
+public class SinglePipeLine&lt;T&gt; : PipeLine&lt;T&gt;
+{
+    private Action&lt;T&gt; _job;
+
+    public SinglePipeLine(Action&lt;T&gt; job)
+    {
+        _job = job;
+    }
+
+    public override void Run(CancellationToken token)
+    {
+        _token = token;
+        _token.Register(() => _resetEvent.Set());
+
+        Task.Factory.StartNew(() =>
+        {
+            while (token.IsCancellationRequested == false)
+            {
+                if (Queue.IsEmpty)
+                    _resetEvent.Reset();
+
+                _resetEvent.WaitOne();
+
+                if (Queue.TryDequeue(out T data))
+                {
+                    try
+                    {
+                        _job(data);
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionHanlder?.Invoke(this, e);
+                    }
+
+                    Count = Queue.Count;
+                }
+            }
+            while (!Queue.IsEmpty)
+
+            Queue.TryDequeue(out var result);
+            Count = Queue.Count;
+        }, TaskCreationOptions.LongRunning);
+    }
+
+    public override void Enqueue(T data)
+    {
+        if (_token.IsCancellationRequested)
+            return;
+
+        Queue.Enqueue(data);
+        _resetEvent.Set();
+
+        Count = Queue.Count;
+    }
+}
+
+</code></pre>
+<Paragraph>Usage</Paragraph>
+<pre><code style="background-color: transparent">
+var cts = new CancellationTokenSource();
+
+_preProcessLine = new SinglePipeLine&lt;Mat&gt;(mat =>
+{
+    //전처리
+    _processLine.Enqueue(mat);
+});
+
+_processLine = new SinglePipeLine&lt;Mat&gt;(mat =>
+{
+    //본처리
+    _postProcessLine.Enqueue(mat);
+});
+_postProcessLine = new SinglePipeLine&lt;Mat&lt;(mat =>
+{
+    //후처리
+});
+
+_preProcessLine.Run(cts.Token);
+_processLine.Run(cts.Token);
+_postProcessLine.Run(cts.Token);
+
+_preProcessLine.Enqueue(mat);
+</code></pre>
+</div>
+@code {
+
+}

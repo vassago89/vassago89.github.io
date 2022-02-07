@@ -1,0 +1,161 @@
+﻿<Title Level="4">Local 저장소 기반의 데이터 저장 및 불러오기</Title>
+<div style="margin: 0rem 1rem">
+    <Paragraph>인터페이스</Paragraph>
+<pre><code style="background-color: transparent;">
+interface IConfig&lt;T&gt;
+{
+    T Deserialize(string filePath);
+    void Serialize(string filePath);
+}
+    
+</code></pre>
+    <Paragraph>Json 구현</Paragraph>
+<pre><code style="background-color: transparent;">
+abstract class JsonConfig&lt;T&gt; : IConfig&lt;T&gt; where T : class, new()
+{
+    private static string _defaultPath => Path.Combine(Environment.CurrentDirectory, $"{typeof(T).Name}.json");
+
+    public JsonConfig()
+    {
+
+    }
+
+    public T Deserialize(string filePath = null)
+    {
+        if (filePath == null)
+            filePath = _defaultPath;
+
+        if (File.Exists(filePath) == false)
+            return new T();
+
+        try
+        {
+            return JsonConvert.DeserializeObject&lt;T&gt;(
+                File.ReadAllText(filePath), new JsonSerializerSettings() {
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
+    public void Serialize(string filePath = null)
+    {
+        try
+        {
+            File.WriteAllText(
+                filePath ?? _defaultPath,
+                JsonConvert.SerializeObject(this, Formatting.Indented,
+                    new JsonSerializerSettings {
+                        TypeNameHandling = TypeNameHandling.All
+                    }));
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+}
+
+</code></pre>
+    <Paragraph>Binary 구현</Paragraph>
+<pre><code style="background-color: transparent">
+[Serializable]
+public abstract class BinaryConfig&lt;T&gt; : IConfig&lt;T&gt; where T : class, new()
+{
+    public string DefualtPath => Path.Combine(Environment.CurrentDirectory, $"{GetType().Name}.bin");
+    private static BinaryFormatter _formatter = new BinaryFormatter();
+
+    public BinaryConfig()
+    {
+
+    }
+
+
+    public T Deserialize(string filePath = null)
+    {
+        if (filePath == null)
+            filePath = DefualtPath;
+
+        if (File.Exists(filePath) == false)
+            return new T();
+
+        using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+        {
+            try
+            {
+                return _formatter.Deserialize(stream) as T;
+            }
+            catch (Exception e)
+            {
+                return new T();
+            }
+        }
+    }
+
+    public void Serialize(string filePath = null)
+    {
+        using (var stream = File.Create(filePath ?? DefualtPath))
+        {
+            _formatter.Serialize(stream, this);
+        }
+    }
+}
+
+</code></pre>
+    <Paragraph>실구현 예시</Paragraph>
+<pre><code style="background-color: transparent">
+class CommonConfig : JsonConfig&lt;CommonConfig&gt;
+{
+    public uint DefaultTarget { get; set; }
+    public int Cols { get; set; }
+    public int Rows { get; set; }
+    public Stretch Stretch { get; set; }
+    public string Culture { get; set; }
+    public string Theme { get; set; }
+    public Color AccentColor { get; set; }
+    public string AccentName { get; set; }
+
+    public Color PatternColor { get; set; }
+    public string PatternName { get; set; }
+    public Color BinaryColor { get; set; }
+    public string BinaryName { get; set; }
+    public Color ProfileColor { get; set; }
+    public string ProfileName { get; set; }
+
+    public CommonConfig()
+    {
+        DefaultTarget = 1000;
+
+        Stretch = Stretch.Uniform;
+        Cols = 1;
+        Rows = 1;
+        Culture = "en-US";
+        Theme = "Light";
+        AccentColor = Colors.SteelBlue;
+        AccentName = "SteelBlue";
+        PatternColor = Colors.Yellow;
+        PatternName = "Yellow";
+        BinaryColor = Colors.Yellow;
+        BinaryName = "Yellow";
+        ProfileColor = Colors.Yellow;
+        ProfileName = "Yellow";
+    }
+}
+
+</code></pre>
+<Paragraph>Usage (with Unity Container)</Paragraph>
+<pre><code style="background-color: transparent;">
+protected override void RegisterTypes(IContainerRegistry containerRegistry)
+{
+    containerRegistry
+        .RegisterInstance(
+            CommonConfig.Deserialize());
+}
+</code></pre>
+</div>
+@code {
+
+}

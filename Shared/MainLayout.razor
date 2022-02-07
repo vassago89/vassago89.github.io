@@ -1,23 +1,86 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS
 
-
-<div class="header">
-    <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Horizontal">
-        <MenuItem>
-            <MenuLink Href="">
-                <span class="oi oi-home" aria-hidden="true"></span> Index
-            </MenuLink>
-        </MenuItem>
-        <MenuItem>
-            <NavLink href="counter">
-                <span class="oi oi-image" aria-hidden="true"></span> Image Edit
-            </NavLink>
-        </MenuItem>
-    </Menu>
-</div>
 <div class="body">
-    @Body
+    <div class="side">
+        <div class="side-full">
+            <Menu Theme="MenuTheme.Dark" Mode="Mode" SelectedKeys="@SelectedKeys">
+                <MenuItem Icon="home" Key="intro" OnClick="() => ScrollTo(0)">
+                    <ChildContent>
+                        Intro
+                    </ChildContent>
+                </MenuItem>
+                <MenuItem Icon="home" Key="experience" OnClick="() => ScrollTo(1)">
+                    <ChildContent>
+                        Experience
+                    </ChildContent>
+                </MenuItem>
+                <MenuItem Icon="home" Key="project"  OnClick="() => ScrollTo(2)">
+                    <ChildContent>
+                        Project
+                    </ChildContent>
+                </MenuItem>
+                <MenuItem Icon="home" Key="code" OnClick="() => ScrollTo(3)">
+                    <ChildContent>
+                        Code Style
+                    </ChildContent>
+                </MenuItem>
+            </Menu>
+            <NavLink Style="float: inline-end; font-size:32px;" href="https://github.com/vassago89">
+                <Icon Type="github"></Icon>
+            </NavLink>
+        </div>
+    </div>
+    <div class="side-margin">
+        @Body
+    </div>
 </div>
-@*<div class="container1">
-    
-</div>*@
+
+@code {
+    static string[] _id = { "intro", "experience", "project", "code" };
+    static MainLayout _instance;
+
+    public static string[] SelectedKeys { get; set; } = { "intro" };
+
+    readonly static int MAX_WIDTH = 768;
+    private static MenuMode Mode = MenuMode.Inline;
+
+    [JSInvokable]
+    public static async void OnScrollChanged(double y)
+    {
+        var yPositions = await _instance?.GetYPositions();
+        if (yPositions == null)
+            return;
+
+        for (var i = yPositions.Count - 1; i >= 0; i--)
+        {
+            if (Math.Round(y) >= yPositions[i])
+            {
+                SelectedKeys = new string[] { _id[i] };
+                break;
+            }
+        }
+
+        _instance?.StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _instance = this;
+    }
+
+    private async Task<List<double>> GetYPositions()
+    {
+        var positions = new List<double>();
+        foreach (var id in _id)
+            positions.Add(await JS.InvokeAsync<double>("getYPosition", id));
+
+        return positions;
+    }
+
+    private async void ScrollTo(int index)
+    {
+        await JS.InvokeVoidAsync("scrollTo", _id[index]);
+        //SelectedKeys = new string[] { _id[index] };
+    }
+}
