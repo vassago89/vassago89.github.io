@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
 
 namespace vassago89.github.io
 {
@@ -19,9 +20,11 @@ namespace vassago89.github.io
 
             builder.Services.AddAntDesign();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //builder.Services.AddSingleton<>();
+            
 
-            await builder.Build().RunAsync();
+            var app = builder.Build();
+            
+            await app.RunAsync();
         }
     }
 }

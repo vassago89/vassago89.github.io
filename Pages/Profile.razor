@@ -1,42 +1,49 @@
 ﻿@page "/"
 @using AntDesign;
 @using vassago89.github.io.Codes;
- 
+@using System.IO;
+
+@inject HttpClient Http
+
 <div style="display:block;">
     <div id="intro" class="full">
-        @*<Title Level="1">안녕하세요. 제 이름은 정해민입니다.</Title>*@
-        <Title Level="2" Class="middle">
-            Intro
-        </Title>
-        <Divider></Divider>
-        <div style="margin: 0rem 1rem">
-            <Title Level="4"><b>Job</b></Title>
-            <Paragraph><b>Image Processing</b></Paragraph>
-            <Paragraph><b>Desktop Apllication Development</b></Paragraph>
-            @*<Title Level="3">Education</Title>
-        <Paragraph>명지대학교 전자공학과 학부 졸업</Paragraph>
-        <Paragraph>명지대학원 전자공학과 석사 수료</Paragraph>*@
-            <Title Level="4"><b>Skills</b></Title>
-            <Paragraph><b>Language</b></Paragraph>
-            <img title="C#" src="/static/icons/csharp.png" alt="C#" height="32" width="32">
-            <img title="C++" src="/static/icons/cplusplus.png" alt="C++" height="32" width="32">
-            <img title="Python" src="/static/icons/python.png" alt="Python" height="32" width="32">
-            <Paragraph><b>Library</b></Paragraph>
-            <img title="OpenCV" src="/static/icons/opencv.png" alt="OpenCV" height="32" width="32">
-            <img title="WPF" src="/static/icons/wpf.png" alt="WPF" height="32" width="32">
-            <img title="Entity Framework" src="/static/icons/entity.svg" alt="Entity Framework" height="32" width="32">
-            <img title="Cuda" src="/static/icons/cuda.png" alt="Cuda" height="32" width="32">
-            <img title="Prism" src="/static/icons/prism.png" alt="Prism" height="32" width="32">
-            <Paragraph><b>Tool</b></Paragraph>
-            <img title="Git" src="/static/icons/github.png" alt="Git" height="32" width="32">
-            <img title="Visual Studio" src="/static/icons/vs.png" alt="Visual Studio" height="32" width="32">
-            <img title="VS Code" src="/static/icons/vs-code.png" alt="VS Code" height="32" width="32">
+        <div class="background-full" style="grid-template-columns: repeat( @col, 1fr); grid-template-rows: repeat( @row, 1fr);">
+            @for (int i = 0; i < row * col; i++)
+            {
+                <img src="@Projects[i]" style="padding: 12px; max-height: 100%; min-height: 100%; min-width: 100%; max-width: 100%; object-fit: fill; " />
+            }
+        </div>
+        <div style="z-index:1;">
+            <Title Level="2" Class="middle">
+                Intro
+            </Title>
+            <Divider></Divider>
+            <div>
+                <Title Level="4"><b>Job</b></Title>
+                <Paragraph><b>Image Processing</b></Paragraph>
+                <Paragraph><b>Desktop Apllication Development</b></Paragraph>
+                <Title Level="4"><b>Skills</b></Title>
+                <Paragraph><b>Language</b></Paragraph>
+                <img title="C#" src="/static/icons/csharp.png" alt="C#" height="32" width="32">
+                <img title="C++" src="/static/icons/cplusplus.png" alt="C++" height="32" width="32">
+                <img title="Python" src="/static/icons/python.png" alt="Python" height="32" width="32">
+                <Paragraph><b>Library</b></Paragraph>
+                <img title="OpenCV" src="/static/icons/opencv.png" alt="OpenCV" height="32" width="32">
+                <img title="WPF" src="/static/icons/wpf.png" alt="WPF" height="32" width="32">
+                <img title="Entity Framework" src="/static/icons/entity.svg" alt="Entity Framework" height="32" width="32">
+                <img title="Cuda" src="/static/icons/cuda.png" alt="Cuda" height="32" width="32">
+                <img title="Prism" src="/static/icons/prism.png" alt="Prism" height="32" width="32">
+                <Paragraph><b>Tool</b></Paragraph>
+                <img title="Git" src="/static/icons/github.png" alt="Git" height="32" width="32">
+                <img title="Visual Studio" src="/static/icons/vs.png" alt="Visual Studio" height="32" width="32">
+                <img title="VS Code" src="/static/icons/vs-code.png" alt="VS Code" height="32" width="32">
+            </div>
         </div>
     </div>
     <div id="experience" class="full invert">
         @*<Title Level="2" Class="middle">
-            Experience
-        </Title>*@
+                Experience
+            </Title>*@
         <div class="row-flex">
             <div style="display: flex; flex-direction: column; ">
                 <Title Level="4" Class="middle">
@@ -123,11 +130,6 @@
                                 <p>4.19 / 4.5</p>
                             </div>
                         </div>
-                        @*<Descriptions>
-                            <DescriptionsItem Title="전공">전자공학과</DescriptionsItem>
-                            <DescriptionsItem Title="입학일">2015-03</DescriptionsItem>
-                            <DescriptionsItem Title="졸업일">2017-02</DescriptionsItem>
-                        </Descriptions>*@
                     </TimelineItem>
                     <TimelineItem>
                         <Paragraph>명지대학교</Paragraph>
@@ -152,11 +154,6 @@
                                 <p>3.21 / 4.5</p>
                             </div>
                         </div>
-                        @*<Descriptions>
-            <DescriptionsItem Title="전공">전자공학과</DescriptionsItem>
-            <DescriptionsItem Title="입학일">2008-03</DescriptionsItem>
-            <DescriptionsItem Title="졸업일">2015-02</DescriptionsItem>
-        </Descriptions>*@
                     </TimelineItem>
                 </Timeline>
             </div>
@@ -168,80 +165,137 @@
         </Title>
     </div>
     <div id="code" class="full invert">
-            <Title Level="2" Class="middle">
-                Code Style
-            </Title>
-            @*<Paragraph Class="middle">재사용성을 높이고 실구현 시 코드량이 감소하는 구현을 선호합니다.</Paragraph>
-            <Divider></Divider>*@
-            <Menu Theme="MenuTheme.Light" Mode=MenuMode.Horizontal SelectedKeysChanged="CodeChanged" SelectedKeys="@Selected">
-                <MenuItem Key="Config">
-                    설정
-                </MenuItem>
-                <MenuItem Key="IoC">
-                    의존성 주입
-                </MenuItem>
-                <MenuItem Key="PipeLine">
-                    순차 &amp; 병렬 처리
-                </MenuItem>
-                <MenuItem Key="EventBus">
-                    프로세스간 통신
-                </MenuItem>
-            </Menu>
-            <div class="code-style @ConfigCollapse">
-                <IConfig></IConfig>
-            </div>
-            <div class="code-style @PipeLineCollapse">
-                <IPipeLine></IPipeLine>
-            </div>
-            <div class="code-style @EventBusCollapse">
-                <IEventBus></IEventBus>
-            </div>
-            <div class="code-style @IoCCollapse">
-                <IoC></IoC>
-            </div>
+        <Title Level="2" Class="middle">
+            Code Style
+        </Title>
+        <Menu Theme="MenuTheme.Light" Mode=MenuMode.Horizontal SelectedKeysChanged="CodeChanged" SelectedKeys="@Selected">
+            <MenuItem Key="Config">
+                설정
+            </MenuItem>
+            <MenuItem Key="IoC">
+                의존성 주입
+            </MenuItem>
+            <MenuItem Key="PipeLine">
+                순차 &amp; 병렬 처리
+            </MenuItem>
+            <MenuItem Key="EventBus">
+                프로세스간 통신
+            </MenuItem>
+        </Menu>
+        <div class="code-style @ConfigCollapse">
+            <IConfig></IConfig>
+        </div>
+        <div class="code-style @PipeLineCollapse">
+            <IPipeLine></IPipeLine>
+        </div>
+        <div class="code-style @EventBusCollapse">
+            <IEventBus></IEventBus>
+        </div>
+        <div class="code-style @IoCCollapse">
+            <IoC></IoC>
         </div>
     </div>
-    @code
+</div>
+@code
 {
-        readonly string Collapse = "collapse";
+    readonly string Collapse = "collapse";
 
-        string[] Selected = { "Config" };
+    string[] Selected = { "Config" };
 
-        string ConfigCollapse = "";
-        string EventBusCollapse = "collapse";
-        string PipeLineCollapse = "collapse";
-        string IoCCollapse = "collapse";
+    string ConfigCollapse = "";
+    string EventBusCollapse = "collapse";
+    string PipeLineCollapse = "collapse";
+    string IoCCollapse = "collapse";
 
-        void CodeChanged(string[] keys)
+    int row;
+    int col;
+
+    List<string> Projects { get; set; } = new List<string>();
+
+    string[] projectNames = new string[]
+    {
+        "B7.png",
+        "BizOne.png",
+        "Cannon.png",
+        "CRF.png",
+        "Gravure.png",
+        "Hole.png",
+        "Hole2.png",
+        "MLCC.png",
+        "MLCC2.png",
+        "Ocr.png",
+        "Offline.png",
+        "Plaster.png",
+        "Print.png",
+        "Tray.png",
+        "Tube.png",
+        "Tube2.png",
+        "Wire.png",
+    };
+
+    readonly string imageFolder = "/static/projects";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProjectSuffle();
+        row = (int)Math.Sqrt(Projects.Count);
+        col = (int)Math.Sqrt(Projects.Count);
+
+        StateHasChanged();
+
+        Task.Run(async () =>
         {
-            switch (keys.First())
+            while (true)
             {
-                case "Config":
-                    ConfigCollapse = "";
-                    EventBusCollapse = Collapse;
-                    PipeLineCollapse = Collapse;
-                    IoCCollapse = Collapse;
-                    break;
-                case "EventBus":
-                    ConfigCollapse = Collapse;
-                    EventBusCollapse = "";
-                    PipeLineCollapse = Collapse;
-                    IoCCollapse = Collapse;
-                    break;
-                case "PipeLine":
-                    ConfigCollapse = Collapse;
-                    EventBusCollapse = Collapse;
-                    PipeLineCollapse = "";
-                    IoCCollapse = Collapse;
-                    break;
-                case "IoC":
-                    ConfigCollapse = Collapse;
-                    EventBusCollapse = Collapse;
-                    PipeLineCollapse = Collapse;
-                    IoCCollapse = "";
-                    break;
+                await Task.Delay(1000);
+                ProjectSuffle();
+                StateHasChanged();
             }
-
-            Selected = keys;
-        }
+        });
     }
+
+    void ProjectSuffle()
+    {
+        Projects.Clear();
+
+        foreach (var name in projectNames)
+        {
+            Projects.Add(Path.Combine(imageFolder, name));
+        }
+
+        Projects = Projects.OrderBy(p => Guid.NewGuid()).ToList();
+    }
+
+    void CodeChanged(string[] keys)
+    {
+        switch (keys.First())
+        {
+            case "Config":
+                ConfigCollapse = "";
+                EventBusCollapse = Collapse;
+                PipeLineCollapse = Collapse;
+                IoCCollapse = Collapse;
+                break;
+            case "EventBus":
+                ConfigCollapse = Collapse;
+                EventBusCollapse = "";
+                PipeLineCollapse = Collapse;
+                IoCCollapse = Collapse;
+                break;
+            case "PipeLine":
+                ConfigCollapse = Collapse;
+                EventBusCollapse = Collapse;
+                PipeLineCollapse = "";
+                IoCCollapse = Collapse;
+                break;
+            case "IoC":
+                ConfigCollapse = Collapse;
+                EventBusCollapse = Collapse;
+                PipeLineCollapse = Collapse;
+                IoCCollapse = "";
+                break;
+        }
+
+        Selected = keys;
+    }
+}
