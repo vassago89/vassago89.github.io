@@ -23,14 +23,14 @@ html, body {
 }
 
 .side-full {
-    width: 160px;
+    width: 10rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .side-margin {
-    margin-left: 160px;
+    margin-left: 10rem;
 }
 
 .full {
@@ -95,8 +95,14 @@ html, body {
 .background-full {
     position: absolute;
     height: 100vh;
-    opacity: 0.25;
+    opacity: 0.05;
     display: grid;
+}
+
+.ant-carousel .slick-slide {
+    text-align: center;
+    align-content: center;
+    background: #1F1F1F;
 }
 
 @media (max-width: 479px) {

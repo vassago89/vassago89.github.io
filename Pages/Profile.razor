@@ -13,11 +13,11 @@
                 <img src="@Projects[i]" style="padding: 12px; max-height: 100%; min-height: 100%; min-width: 100%; max-width: 100%; object-fit: fill; " />
             }
         </div>
-        <div style="z-index:1;">
-            <Title Level="2" Class="middle">
-                Intro
-            </Title>
-            <Divider></Divider>
+        <Title Level="2" Class="middle" style="z-index:1">
+            Intro
+        </Title>
+        <Divider></Divider>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); z-index:1;">
             <div>
                 <Title Level="4"><b>Job</b></Title>
                 <Paragraph><b>Image Processing</b></Paragraph>
@@ -38,8 +38,21 @@
                 <img title="Visual Studio" src="/static/icons/vs.png" alt="Visual Studio" height="32" width="32">
                 <img title="VS Code" src="/static/icons/vs-code.png" alt="VS Code" height="32" width="32">
             </div>
+            <div>
+
+            </div>
+            <div style="width: 30rem;">
+                <Carousel Autoplay="TimeSpan.FromSeconds(4)">
+                    @foreach (var project in Projects)
+                    {
+                        <CarouselSlick>
+                            <img src="@project" style="padding: 4rem 2rem; height: 28rem; width: 28rem; object-fit: fill; " />
+                        </CarouselSlick>
+                    }
+                </Carousel>
+            </div>
         </div>
-    </div>
+    </div> 
     <div id="experience" class="full invert">
         @*<Title Level="2" Class="middle">
                 Experience
@@ -243,15 +256,15 @@
 
         StateHasChanged();
 
-        Task.Run(async () =>
-        {
-            while (true)
-            {
-                await Task.Delay(1000);
-                ProjectSuffle();
-                StateHasChanged();
-            }
-        });
+        //Task.Run(async () =>
+        //{
+        //    while (true)
+        //    {
+        //        await Task.Delay(1000);
+        //        ProjectSuffle();
+        //        StateHasChanged();
+        //    }
+        //});
     }
 
     void ProjectSuffle()
