@@ -7,12 +7,12 @@
 
 <div style="display:block;">
     <div id="intro" class="full">
-        <div class="background-full" style="grid-template-columns: repeat( @col, 1fr); grid-template-rows: repeat( @row, 1fr);">
+        @*<div class="background-full" style="grid-template-columns: repeat( @col, 1fr); grid-template-rows: repeat( @row, 1fr);">
             @for (int i = 0; i < row * col; i++)
             {
                 <img src="@Projects[i]" style="padding: 12px; max-height: 100%; min-height: 100%; min-width: 100%; max-width: 100%; object-fit: fill; " />
             }
-        </div>
+        </div>*@
         <Title Level="2" Class="middle" style="z-index:1">
             Intro
         </Title>
@@ -30,9 +30,9 @@
                 <Paragraph><b>Library</b></Paragraph>
                 <img title="OpenCV" src="/static/icons/opencv.png" alt="OpenCV" height="32" width="32">
                 <img title="WPF" src="/static/icons/wpf.png" alt="WPF" height="32" width="32">
+                <img title="Prism" src="/static/icons/prism.png" alt="Prism" height="32" width="32">
                 <img title="Entity Framework" src="/static/icons/entity.svg" alt="Entity Framework" height="32" width="32">
                 <img title="Cuda" src="/static/icons/cuda.png" alt="Cuda" height="32" width="32">
-                <img title="Prism" src="/static/icons/prism.png" alt="Prism" height="32" width="32">
                 <Paragraph><b>Tool</b></Paragraph>
                 <img title="Git" src="/static/icons/github.png" alt="Git" height="32" width="32">
                 <img title="Visual Studio" src="/static/icons/vs.png" alt="Visual Studio" height="32" width="32">
@@ -41,12 +41,12 @@
             <div>
 
             </div>
-            <div style="width: 30rem;">
+            <div style="width: 52rem;">
                 <Carousel Autoplay="TimeSpan.FromSeconds(4)">
                     @foreach (var project in Projects)
                     {
                         <CarouselSlick>
-                            <img src="@project" style="padding: 4rem 2rem; height: 28rem; width: 28rem; object-fit: fill; " />
+                            <img src="@project" style="padding: 4rem 4rem; height: 30rem; width: 52rem; object-fit: fill; " />
                         </CarouselSlick>
                     }
                 </Carousel>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="border"></div>
                             <div>
-                                <p>선임 연구원</p>
+                                <p>선임 연구원 (과제)</p>
                                 <p>2021-01</p>
                                 <p>2021-12</p>
                             </div>
@@ -176,11 +176,23 @@
         <Title Level="2" Class="middle">
             Project
         </Title>
+        <Divider/>
+        <div class="row-flex">
+            <div style="display: flex; flex-direction: column; ">
+                <Timeline Mode="left">
+                    <TimelineItem>Create a services</TimelineItem>
+                    <TimelineItem>Solve initial network problems</TimelineItem>
+                    <TimelineItem>Technical testing</TimelineItem>
+                    <TimelineItem>Network problems being solved</TimelineItem>
+                </Timeline>
+            </div>
+        </div>
     </div>
     <div id="code" class="full invert">
         <Title Level="2" Class="middle">
             Code Style
         </Title>
+        <Divider/>
         <Menu Theme="MenuTheme.Light" Mode=MenuMode.Horizontal SelectedKeysChanged="CodeChanged" SelectedKeys="@Selected">
             <MenuItem Key="Config">
                 설정
@@ -213,6 +225,7 @@
 {
     readonly string Collapse = "collapse";
 
+
     string[] Selected = { "Config" };
 
     string ConfigCollapse = "";
@@ -227,26 +240,21 @@
 
     string[] projectNames = new string[]
     {
-        "B7.png",
-        "BizOne.png",
-        "Cannon.png",
-        "CRF.png",
-        "Gravure.png",
-        "Hole.png",
-        "Hole2.png",
-        "MLCC.png",
-        "MLCC2.png",
-        "Ocr.png",
+        "FIAT.png",
+        "SfM.png",
+        "Mold.png",
         "Offline.png",
-        "Plaster.png",
+        "Gravure.png",
         "Print.png",
-        "Tray.png",
-        "Tube.png",
-        "Tube2.png",
         "Wire.png",
+        "MLCC.png",
+        "MLCC_Etc.png",
+        "Tray.png",
+        "Plaster.png",
+        "BizOne.png",
     };
 
-    readonly string imageFolder = "/static/projects";
+    readonly string imageFolder = "/static/intro";
 
     protected override async Task OnInitializedAsync()
     {
@@ -276,7 +284,7 @@
             Projects.Add(Path.Combine(imageFolder, name));
         }
 
-        Projects = Projects.OrderBy(p => Guid.NewGuid()).ToList();
+        //Projects = Projects.OrderBy(p => Guid.NewGuid()).ToList();
     }
 
     void CodeChanged(string[] keys)

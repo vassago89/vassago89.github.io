@@ -68,7 +68,7 @@ html, body {
 .code-style {
     flex: 1;
     overflow: auto;
-    padding: 1rem;
+    padding: 4rem 1rem;
     background: #FFFFFF;
 }
 
