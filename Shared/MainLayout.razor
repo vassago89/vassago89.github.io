@@ -5,22 +5,22 @@
     <div class="side">
         <div class="side-full">
             <Menu Theme="MenuTheme.Dark" Mode="Mode" SelectedKeys="@SelectedKeys">
-                <MenuItem Icon="home" Key="intro" OnClick="() => ScrollTo(0)">
+                <MenuItem Key="intro" OnClick="() => ScrollTo(0)">
                     <ChildContent>
                         Intro
                     </ChildContent>
                 </MenuItem>
-                <MenuItem Icon="home" Key="experience" OnClick="() => ScrollTo(1)">
+                <MenuItem Key="experience" OnClick="() => ScrollTo(1)">
                     <ChildContent>
                         Experience
                     </ChildContent>
                 </MenuItem>
-                <MenuItem Icon="home" Key="project"  OnClick="() => ScrollTo(2)">
+                @*<MenuItem Icon="home" Key="project"  OnClick="() => ScrollTo(2)">
                     <ChildContent>
                         Project
                     </ChildContent>
-                </MenuItem>
-                <MenuItem Icon="home" Key="code" OnClick="() => ScrollTo(3)">
+                </MenuItem>*@
+                <MenuItem Key="code" OnClick="() => ScrollTo(2)">
                     <ChildContent>
                         Code Style
                     </ChildContent>
@@ -37,7 +37,7 @@
 </div>
 
 @code {
-    static string[] _id = { "intro", "experience", "project", "code" };
+    static string[] _id = { "intro", "experience", "code" };
     static MainLayout _instance;
 
     public static string[] SelectedKeys { get; set; } = { "intro" };
